@@ -44,14 +44,14 @@ class Form extends React.Component {
           primeiro-atributo
           <input
             id="primeiro-atributo"
-            name="primeiro-atributo"
+            name="primeiroAtributo"
             type="number"
             value={ cardAttr1 }
             onChange={ onInputChange }
             data-testid="attr1-input"
           />
         </label>
-        <label htmlFor="segundo-atributo">
+        <label htmlFor="segundoAtributo">
           segundo-atributo
           <input
             id="segundo-atributo"
@@ -62,7 +62,7 @@ class Form extends React.Component {
             data-testid="attr2-input"
           />
         </label>
-        <label htmlFor="terceiro-atributo">
+        <label htmlFor="terceiroAtributo">
           terceiro-atributo
           <input
             id="terceiro-atributo"
@@ -77,7 +77,7 @@ class Form extends React.Component {
           caminho para a imagem
           <input
             id="caminho-para-a-imagem"
-            name="caminho-para-a-imagem"
+            name="imagem"
             type="text"
             value={ cardImage }
             onChange={ onInputChange }
@@ -102,6 +102,7 @@ class Form extends React.Component {
         </label>
         <button
           type="button"
+          name="button"
           disabled={ isSaveButtonDisabled }
           onClick={ onSaveButtonClick }
           data-testid="save-button"
