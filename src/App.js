@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-closing-tag-location */
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
+import Header from './components/Header';
 
 class App extends React.Component {
   constructor() {
@@ -16,6 +18,8 @@ class App extends React.Component {
       SuperTrunfo: false,
       hasTrunfo: false,
       saved: [],
+      pesquisa: false,
+      filtroName: '',
     };
   }
 
@@ -31,10 +35,23 @@ class App extends React.Component {
 
   onInputChange = ({ target }) => {
     const { name } = target;
+    // const { filtroName } = this.state;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({
       [name]: value,
+    }, () => {
+      const { filtroName } = this.state;
+      this.onChange(filtroName);
     });
+  };
+
+  onChange = (name) => {
+    if (name.length > 0) {
+      this.setState({ pesquisa: true });
+    }
+    if (name.length === 0) {
+      this.setState({ pesquisa: false });
+    }
   };
 
   enableButton = () => {
@@ -101,6 +118,35 @@ class App extends React.Component {
     this.setState({ saved: array });
   };
 
+  test = () => {
+    const { saved, filtroName } = this.state;
+    const tests = saved.filter((carta) => (carta.nome.includes(filtroName)));
+    return tests.map((carta) => (
+      <div key={ carta.nome }>
+        <Card
+          key={ `carta ${carta.nome}` }
+          cardName={ carta.nome }
+          cardDescription={ carta.descricao }
+          cardAttr1={ carta.primeiroAtributo }
+          cardAttr2={ carta.segundoAtributo }
+          cardAttr3={ carta.terceiroAtributo }
+          cardImage={ carta.imagem }
+          cardRare={ carta.tipo }
+          cardTrunfo={ carta.SuperTrunfo }
+        />
+        {' '}
+        <button
+          key={ `button ${carta.nome}` }
+          type="button"
+          data-testid="delete-button"
+          onClick={ () => this.removeCard(carta.nome) }
+        >
+          Excluir
+        </button>
+
+      </div>));
+  };
+
   render() {
     const { nome,
       descricao,
@@ -111,36 +157,43 @@ class App extends React.Component {
       tipo,
       SuperTrunfo,
       hasTrunfo,
-      saved } = this.state;
+      saved,
+      pesquisa,
+      filtroName } = this.state;
     return (
       <>
+        <Header cardName={ filtroName } onInputChange={ this.onInputChange } />
         <div>
-          <Form
-            cardName={ nome }
-            cardDescription={ descricao }
-            cardAttr1={ primeiroAtributo }
-            cardAttr2={ segundoAtributo }
-            cardAttr3={ terceiroAtributo }
-            cardImage={ imagem }
-            cardRare={ tipo }
-            cardTrunfo={ SuperTrunfo }
-            hasTrunfo={ hasTrunfo }
-            isSaveButtonDisabled={ !this.enableButton() }
-            onInputChange={ this.onInputChange }
-            onSaveButtonClick={ this.onSaveButtonClick }
-          />
-          <Card
-            cardName={ nome }
-            cardDescription={ descricao }
-            cardAttr1={ primeiroAtributo }
-            cardAttr2={ segundoAtributo }
-            cardAttr3={ terceiroAtributo }
-            cardImage={ imagem }
-            cardRare={ tipo }
-            cardTrunfo={ SuperTrunfo }
-          />
+          {!pesquisa
+          && <>
+            <Form
+              cardName={ nome }
+              cardDescription={ descricao }
+              cardAttr1={ primeiroAtributo }
+              cardAttr2={ segundoAtributo }
+              cardAttr3={ terceiroAtributo }
+              cardImage={ imagem }
+              cardRare={ tipo }
+              cardTrunfo={ SuperTrunfo }
+              hasTrunfo={ hasTrunfo }
+              isSaveButtonDisabled={ !this.enableButton() }
+              onInputChange={ this.onInputChange }
+              onSaveButtonClick={ this.onSaveButtonClick }
+            />
+            <Card
+              cardName={ nome }
+              cardDescription={ descricao }
+              cardAttr1={ primeiroAtributo }
+              cardAttr2={ segundoAtributo }
+              cardAttr3={ terceiroAtributo }
+              cardImage={ imagem }
+              cardRare={ tipo }
+              cardTrunfo={ SuperTrunfo }
+            />
+          </>}
         </div>
-        <div>
+        {!pesquisa
+        && <div>
           {' '}
           {saved.map((carta) => (
             <div key={ carta.nome }>
@@ -167,7 +220,8 @@ class App extends React.Component {
 
             </div>))}
           {' '}
-        </div>
+        </div>}
+        {pesquisa && <div>{this.test()}</div>}
       </>
     );
   }
