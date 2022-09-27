@@ -63,14 +63,16 @@ class App extends React.Component {
       terceiroAtributo,
       nome,
       descricao,
-      imagem, SuperTrunfo } = this.state;
+      imagem, SuperTrunfo, tipo } = this.state;
     const newCard = {
       primeiroAtributo,
       segundoAtributo,
       terceiroAtributo,
       nome,
       descricao,
-      imagem };
+      imagem,
+      tipo,
+      SuperTrunfo };
     if (SuperTrunfo === true) {
       this.setState({
         hasTrunfo: true,
@@ -87,6 +89,16 @@ class App extends React.Component {
       tipo: 'normal',
       SuperTrunfo: false,
     }));
+  };
+
+  removeCard = (cartaNome) => {
+    const { saved } = this.state;
+    const array = saved.filter((carta) => !cartaNome.includes(carta.nome));
+    const temUmSuper = array.every((element) => element.SuperTrunfo === false);
+    if (temUmSuper) {
+      this.setState({ hasTrunfo: false });
+    }
+    this.setState({ saved: array });
   };
 
   render() {
@@ -130,17 +142,30 @@ class App extends React.Component {
         </div>
         <div>
           {' '}
-          {saved.map((carta) => (<Card
-            key={ carta.nome }
-            cardName={ carta.nome }
-            cardDescription={ carta.descricao }
-            cardAttr1={ carta.primeiroAtributo }
-            cardAttr2={ carta.segundoAtributo }
-            cardAttr3={ carta.terceiroAtributo }
-            cardImage={ carta.imagem }
-            cardRare={ carta.tipo }
-            cardTrunfo={ carta.SuperTrunfo }
-          />))}
+          {saved.map((carta) => (
+            <div key={ carta.nome }>
+              <Card
+                key={ `carta ${carta.nome}` }
+                cardName={ carta.nome }
+                cardDescription={ carta.descricao }
+                cardAttr1={ carta.primeiroAtributo }
+                cardAttr2={ carta.segundoAtributo }
+                cardAttr3={ carta.terceiroAtributo }
+                cardImage={ carta.imagem }
+                cardRare={ carta.tipo }
+                cardTrunfo={ carta.SuperTrunfo }
+              />
+              {' '}
+              <button
+                key={ `button ${carta.nome}` }
+                type="button"
+                data-testid="delete-button"
+                onClick={ () => this.removeCard(carta.nome) }
+              >
+                Excluir
+              </button>
+
+            </div>))}
           {' '}
         </div>
       </>
