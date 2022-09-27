@@ -15,6 +15,7 @@ class App extends React.Component {
       tipo: 'normal',
       SuperTrunfo: false,
       hasTrunfo: false,
+      saved: [],
     };
   }
 
@@ -56,7 +57,36 @@ class App extends React.Component {
     return result;
   };
 
+  // estadoInicial = () => {
+  //   this.setState({
+
+  //   })
+  // }
+
   onSaveButtonClick = () => {
+    const { primeiroAtributo,
+      segundoAtributo,
+      terceiroAtributo,
+      nome,
+      descricao,
+      imagem } = this.state;
+    const newCard = {
+      primeiroAtributo,
+      segundoAtributo,
+      terceiroAtributo,
+      nome,
+      descricao,
+      imagem };
+    this.setState((prevState) => ({
+      saved: [...prevState.saved, newCard],
+      nome: '',
+      descricao: '',
+      primeiroAtributo: '0',
+      segundoAtributo: '0',
+      terceiroAtributo: '0',
+      imagem: '',
+      tipo: 'normal',
+    }));
   };
 
   render() {
@@ -68,7 +98,8 @@ class App extends React.Component {
       imagem,
       tipo,
       SuperTrunfo,
-      hasTrunfo } = this.state;
+      hasTrunfo,
+      saved } = this.state;
     return (
       <div>
         <Form
