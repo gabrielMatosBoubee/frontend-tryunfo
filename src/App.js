@@ -130,7 +130,7 @@ class App extends React.Component {
         </div>
         <div>
           {' '}
-          {saved.map((carta) => (<card
+          {saved.map((carta) => (<Card
             key={ carta.nome }
             cardName={ carta.nome }
             cardDescription={ carta.descricao }
