@@ -11,7 +11,7 @@ class Form extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
-      hasTrunfo,
+      //   hasTrunfo,
       isSaveButtonDisabled,
       onInputChange,
       onSaveButtonClick } = this.props;
@@ -54,8 +54,8 @@ class Form extends React.Component {
         <label htmlFor="segundoAtributo">
           segundo-atributo
           <input
-            id="segundo-atributo"
-            name="segundo-atributo"
+            id="segundoAtributo"
+            name="segundoAtributo"
             type="number"
             value={ cardAttr2 }
             onChange={ onInputChange }
@@ -65,8 +65,8 @@ class Form extends React.Component {
         <label htmlFor="terceiroAtributo">
           terceiro-atributo
           <input
-            id="terceiro-atributo"
-            name="terceiro-atributo"
+            id="terceiroAtributo"
+            name="terceiroAtributo"
             type="number"
             value={ cardAttr3 }
             onChange={ onInputChange }
@@ -84,10 +84,16 @@ class Form extends React.Component {
             data-testid="image-input"
           />
         </label>
-        <select id="tipo" name="tipo" data-testid="rare-input" onChange={ onInputChange }>
-          <option value={ cardRare }>normal</option>
-          <option value={ cardRare }>raro</option>
-          <option value={ cardRare }>muito raro</option>
+        <select
+          id="tipo"
+          name="tipo"
+          data-testid="rare-input"
+          onChange={ onInputChange }
+          value={ cardRare }
+        >
+          <option value="normal">normal</option>
+          <option value="raro">raro</option>
+          <option value="muito raro">muito raro</option>
         </select>
         <label htmlFor="SuperTrunfo">
           Super Trunfo
@@ -123,7 +129,7 @@ Form.propTypes = {
   cardImage: propTypes.string.isRequired,
   cardRare: propTypes.string.isRequired,
   cardTrunfo: propTypes.bool.isRequired,
-  hasTrunfo: propTypes.bool.isRequired,
+  //   hasTrunfo: propTypes.bool.isRequired,
   isSaveButtonDisabled: propTypes.bool.isRequired,
   onInputChange: propTypes.func.isRequired,
   onSaveButtonClick: propTypes.func.isRequired,

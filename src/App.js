@@ -5,32 +5,58 @@ import Card from './components/Card';
 class App extends React.Component {
   constructor() {
     super();
-    this.State = {
+    this.state = {
       nome: '',
       descricao: '',
-      primeiroAtributo: '',
-      segundoAtributo: '',
-      terceiroAtributo: '',
+      primeiroAtributo: '0',
+      segundoAtributo: '0',
+      terceiroAtributo: '0',
       imagem: '',
       tipo: 'normal',
-      SuperTrunfo: '',
+      SuperTrunfo: false,
       hasTrunfo: false,
-      button: false,
     };
   }
 
-  onInputChange = ({ event }) => {
-    const { name } = event;
+  validaAtributos = (valor1, valor2, valor3) => {
+    const noventa = 90;
+    const validarOValor1 = +valor1 >= 0 && +valor1 <= noventa;
+    const validarOValor2 = +valor2 >= 0 && +valor2 <= noventa;
+    const validarOValor3 = +valor3 >= 0 && +valor3 <= noventa;
+    const ValorDaSoma = 210;
+    const validaSoma = (+valor1 + +valor2 + +valor3) <= ValorDaSoma;
+    return validarOValor1 && validarOValor2 && validarOValor3 && validaSoma;
+  };
+
+  onInputChange = ({ target }) => {
+    const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({
       [name]: value,
     });
   };
 
+  enableButton = () => {
+    const { primeiroAtributo,
+      segundoAtributo,
+      terceiroAtributo,
+      nome,
+      descricao,
+      imagem } = this.state;
+    const num = this.validaAtributos(primeiroAtributo, segundoAtributo, terceiroAtributo);
+    const name = nome.length > 0;
+    const describe = descricao.length > 0;
+    const img = imagem.length > 0;
+    const result = num && name && describe && img;
+    // if (result === true) {
+    //   this.setState({
+    //     button: false,
+    //   });
+    // } else this.setState({ button: true });
+    return result;
+  };
+
   onSaveButtonClick = () => {
-    this.setState({
-      button: true,
-    });
   };
 
   render() {
@@ -42,7 +68,7 @@ class App extends React.Component {
       imagem,
       tipo,
       SuperTrunfo,
-      button } = this.State;
+      hasTrunfo } = this.state;
     return (
       <div>
         <Form
@@ -55,7 +81,7 @@ class App extends React.Component {
           cardRare={ tipo }
           cardTrunfo={ SuperTrunfo }
           hasTrunfo={ hasTrunfo }
-          isSaveButtonDisabled={ () => (button === true) }
+          isSaveButtonDisabled={ !this.enableButton() }
           onInputChange={ this.onInputChange }
           onSaveButtonClick={ this.onSaveButtonClick }
         />
