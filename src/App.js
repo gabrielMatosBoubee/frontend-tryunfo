@@ -57,19 +57,13 @@ class App extends React.Component {
     return result;
   };
 
-  // estadoInicial = () => {
-  //   this.setState({
-
-  //   })
-  // }
-
   onSaveButtonClick = () => {
     const { primeiroAtributo,
       segundoAtributo,
       terceiroAtributo,
       nome,
       descricao,
-      imagem } = this.state;
+      imagem, SuperTrunfo } = this.state;
     const newCard = {
       primeiroAtributo,
       segundoAtributo,
@@ -77,6 +71,11 @@ class App extends React.Component {
       nome,
       descricao,
       imagem };
+    if (SuperTrunfo === true) {
+      this.setState({
+        hasTrunfo: true,
+      });
+    }
     this.setState((prevState) => ({
       saved: [...prevState.saved, newCard],
       nome: '',
@@ -86,6 +85,7 @@ class App extends React.Component {
       terceiroAtributo: '0',
       imagem: '',
       tipo: 'normal',
+      SuperTrunfo: false,
     }));
   };
 
@@ -101,32 +101,49 @@ class App extends React.Component {
       hasTrunfo,
       saved } = this.state;
     return (
-      <div>
-        <Form
-          cardName={ nome }
-          cardDescription={ descricao }
-          cardAttr1={ primeiroAtributo }
-          cardAttr2={ segundoAtributo }
-          cardAttr3={ terceiroAtributo }
-          cardImage={ imagem }
-          cardRare={ tipo }
-          cardTrunfo={ SuperTrunfo }
-          hasTrunfo={ hasTrunfo }
-          isSaveButtonDisabled={ !this.enableButton() }
-          onInputChange={ this.onInputChange }
-          onSaveButtonClick={ this.onSaveButtonClick }
-        />
-        <Card
-          cardName={ nome }
-          cardDescription={ descricao }
-          cardAttr1={ primeiroAtributo }
-          cardAttr2={ segundoAtributo }
-          cardAttr3={ terceiroAtributo }
-          cardImage={ imagem }
-          cardRare={ tipo }
-          cardTrunfo={ SuperTrunfo }
-        />
-      </div>
+      <>
+        <div>
+          <Form
+            cardName={ nome }
+            cardDescription={ descricao }
+            cardAttr1={ primeiroAtributo }
+            cardAttr2={ segundoAtributo }
+            cardAttr3={ terceiroAtributo }
+            cardImage={ imagem }
+            cardRare={ tipo }
+            cardTrunfo={ SuperTrunfo }
+            hasTrunfo={ hasTrunfo }
+            isSaveButtonDisabled={ !this.enableButton() }
+            onInputChange={ this.onInputChange }
+            onSaveButtonClick={ this.onSaveButtonClick }
+          />
+          <Card
+            cardName={ nome }
+            cardDescription={ descricao }
+            cardAttr1={ primeiroAtributo }
+            cardAttr2={ segundoAtributo }
+            cardAttr3={ terceiroAtributo }
+            cardImage={ imagem }
+            cardRare={ tipo }
+            cardTrunfo={ SuperTrunfo }
+          />
+        </div>
+        <div>
+          {' '}
+          {saved.map((carta) => (<card
+            key={ carta.nome }
+            cardName={ carta.nome }
+            cardDescription={ carta.descricao }
+            cardAttr1={ carta.primeiroAtributo }
+            cardAttr2={ carta.segundoAtributo }
+            cardAttr3={ carta.terceiroAtributo }
+            cardImage={ carta.imagem }
+            cardRare={ carta.tipo }
+            cardTrunfo={ carta.SuperTrunfo }
+          />))}
+          {' '}
+        </div>
+      </>
     );
   }
 }
