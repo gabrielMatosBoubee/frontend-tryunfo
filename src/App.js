@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-closing-tag-location */
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
@@ -197,40 +196,35 @@ class App extends React.Component {
           cardTrunfo={ trunfoFiltrado }
         />
         <div>
-          {!pesquisa
-          && <>
-            <Form
-              cardName={ nome }
-              cardDescription={ descricao }
-              cardAttr1={ primeiroAtributo }
-              cardAttr2={ segundoAtributo }
-              cardAttr3={ terceiroAtributo }
-              cardImage={ imagem }
-              cardRare={ tipo }
-              cardTrunfo={ SuperTrunfo }
-              hasTrunfo={ hasTrunfo }
-              isSaveButtonDisabled={ !this.enableButton() }
-              onInputChange={ this.onInputChange }
-              onSaveButtonClick={ this.onSaveButtonClick }
-            />
-            <Card
-              cardName={ nome }
-              cardDescription={ descricao }
-              cardAttr1={ primeiroAtributo }
-              cardAttr2={ segundoAtributo }
-              cardAttr3={ terceiroAtributo }
-              cardImage={ imagem }
-              cardRare={ tipo }
-              cardTrunfo={ SuperTrunfo }
-            />
-          </>}
+          {!pesquisa && (
+            <>
+              <Form
+                cardName={ nome }
+                cardDescription={ descricao }
+                cardAttr1={ primeiroAtributo }
+                cardAttr2={ segundoAtributo }
+                cardAttr3={ terceiroAtributo }
+                cardImage={ imagem }
+                cardRare={ tipo }
+                cardTrunfo={ SuperTrunfo }
+                hasTrunfo={ hasTrunfo }
+                isSaveButtonDisabled={ !this.enableButton() }
+                onInputChange={ this.onInputChange }
+                onSaveButtonClick={ this.onSaveButtonClick }
+              />
+              <Card
+                cardName={ nome }
+                cardDescription={ descricao }
+                cardAttr1={ primeiroAtributo }
+                cardAttr2={ segundoAtributo }
+                cardAttr3={ terceiroAtributo }
+                cardImage={ imagem }
+                cardRare={ tipo }
+                cardTrunfo={ SuperTrunfo }
+              />
+            </>)}
         </div>
-        {!pesquisa
-        && <div>
-          {' '}
-          {this.cards(saved)}
-          {' '}
-        </div>}
+        {!pesquisa && <div>{this.cards(saved)}</div>}
         {pesquisa && <div>{this.mostraCards()}</div>}
       </>
     );
