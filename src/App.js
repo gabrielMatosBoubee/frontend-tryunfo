@@ -20,6 +20,8 @@ class App extends React.Component {
       saved: [],
       pesquisa: false,
       filtroName: '',
+      filtroPorTipo: 'todos',
+      trunfoFiltrado: false,
     };
   }
 
@@ -40,8 +42,10 @@ class App extends React.Component {
     this.setState({
       [name]: value,
     }, () => {
-      const { filtroName } = this.state;
+      const { filtroName, filtroPorTipo, trunfoFiltrado } = this.state;
       this.onChange(filtroName);
+      this.onChangeFiltroTipo(filtroPorTipo);
+      this.onChangeFiltroTrunfo(trunfoFiltrado);
     });
   };
 
@@ -51,6 +55,21 @@ class App extends React.Component {
     }
     if (name.length === 0) {
       this.setState({ pesquisa: false });
+    }
+  };
+
+  onChangeFiltroTipo = (name) => {
+    if (name === 'normal' || name === 'raro' || name === 'muito raro') {
+      this.setState({ pesquisa: true });
+    }
+    if (name === 'todas') {
+      this.setState({ pesquisa: false });
+    }
+  };
+
+  onChangeFiltroTrunfo = (name) => {
+    if (name === true) {
+      this.setState({ pesquisa: true });
     }
   };
 
@@ -66,11 +85,6 @@ class App extends React.Component {
     const describe = descricao.length > 0;
     const img = imagem.length > 0;
     const result = num && name && describe && img;
-    // if (result === true) {
-    //   this.setState({
-    //     button: false,
-    //   });
-    // } else this.setState({ button: true });
     return result;
   };
 
@@ -118,10 +132,8 @@ class App extends React.Component {
     this.setState({ saved: array });
   };
 
-  test = () => {
-    const { saved, filtroName } = this.state;
-    const tests = saved.filter((carta) => (carta.nome.includes(filtroName)));
-    return tests.map((carta) => (
+  cards = (parametro) => {
+    const cardNaTela = parametro.map((carta) => (
       <div key={ carta.nome }>
         <Card
           key={ `carta ${carta.nome}` }
@@ -145,6 +157,20 @@ class App extends React.Component {
         </button>
 
       </div>));
+    return cardNaTela;
+  };
+
+  mostraCards = () => {
+    const { saved, filtroName, filtroPorTipo, trunfoFiltrado } = this.state;
+    const cartasFiltradas = saved.filter((cart) => (cart.nome.includes(filtroName)));
+    const cardFilterType = saved.filter((cart) => cart.tipo === filtroPorTipo);
+    const cardFilterTrunfo = saved.filter((cart) => cart.SuperTrunfo === true);
+    // console.log(cardFilterTrunfo);
+    if (filtroName.length > 0) {
+      return this.cards(cartasFiltradas);
+    } return trunfoFiltrado === true
+      ? this.cards(cardFilterTrunfo) : this.cards(cardFilterType);
+    // return this.cards(cardFilterType);
   };
 
   render() {
@@ -159,10 +185,17 @@ class App extends React.Component {
       hasTrunfo,
       saved,
       pesquisa,
-      filtroName } = this.state;
+      filtroName,
+      filtroPorTipo,
+      trunfoFiltrado } = this.state;
     return (
       <>
-        <Header cardName={ filtroName } onInputChange={ this.onInputChange } />
+        <Header
+          cardName={ filtroName }
+          onInputChange={ this.onInputChange }
+          cardRare={ filtroPorTipo }
+          cardTrunfo={ trunfoFiltrado }
+        />
         <div>
           {!pesquisa
           && <>
@@ -195,33 +228,10 @@ class App extends React.Component {
         {!pesquisa
         && <div>
           {' '}
-          {saved.map((carta) => (
-            <div key={ carta.nome }>
-              <Card
-                key={ `carta ${carta.nome}` }
-                cardName={ carta.nome }
-                cardDescription={ carta.descricao }
-                cardAttr1={ carta.primeiroAtributo }
-                cardAttr2={ carta.segundoAtributo }
-                cardAttr3={ carta.terceiroAtributo }
-                cardImage={ carta.imagem }
-                cardRare={ carta.tipo }
-                cardTrunfo={ carta.SuperTrunfo }
-              />
-              {' '}
-              <button
-                key={ `button ${carta.nome}` }
-                type="button"
-                data-testid="delete-button"
-                onClick={ () => this.removeCard(carta.nome) }
-              >
-                Excluir
-              </button>
-
-            </div>))}
+          {this.cards(saved)}
           {' '}
         </div>}
-        {pesquisa && <div>{this.test()}</div>}
+        {pesquisa && <div>{this.mostraCards()}</div>}
       </>
     );
   }
