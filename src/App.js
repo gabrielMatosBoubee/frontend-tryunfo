@@ -21,6 +21,7 @@ class App extends React.Component {
       filtroName: '',
       filtroPorTipo: 'todos',
       trunfoFiltrado: false,
+      classe: 'CardBorder',
     };
   }
 
@@ -118,22 +119,27 @@ class App extends React.Component {
       imagem: '',
       tipo: 'normal',
       SuperTrunfo: false,
-    }));
+    }), () => {
+      const { saved } = this.state;
+      localStorage.setItem('saved', JSON.stringify(saved));
+    });
   };
 
   removeCard = (cartaNome) => {
     const { saved } = this.state;
-    const array = saved.filter((carta) => !cartaNome.includes(carta.nome));
+    const array = saved.filter((carta) => cartaNome !== carta.nome);
     const temUmSuper = array.every((element) => element.SuperTrunfo === false);
     if (temUmSuper) {
       this.setState({ hasTrunfo: false });
     }
-    this.setState({ saved: array });
+    this.setState({ saved: array }, () => {
+      localStorage.setItem('saved', JSON.stringify(array));
+    });
   };
 
   cards = (parametro) => {
     const cardNaTela = parametro.map((carta) => (
-      <div key={ carta.nome }>
+      <div key={ carta.nome } className="cardCollection">
         <Card
           key={ `carta ${carta.nome}` }
           cardName={ carta.nome }
@@ -148,11 +154,12 @@ class App extends React.Component {
         {' '}
         <button
           key={ `button ${carta.nome}` }
+          className="delete"
           type="button"
           data-testid="delete-button"
           onClick={ () => this.removeCard(carta.nome) }
         >
-          Excluir
+          X
         </button>
 
       </div>));
@@ -161,7 +168,8 @@ class App extends React.Component {
 
   mostraCards = () => {
     const { saved, filtroName, filtroPorTipo, trunfoFiltrado } = this.state;
-    const cartasFiltradas = saved.filter((cart) => (cart.nome.includes(filtroName)));
+    const cartasFiltradas = saved
+      .filter((cart) => (cart.nome.toUpperCase().includes(filtroName.toUpperCase())));
     const cardFilterType = saved.filter((cart) => cart.tipo === filtroPorTipo);
     const cardFilterTrunfo = saved.filter((cart) => cart.SuperTrunfo === true);
     // console.log(cardFilterTrunfo);
@@ -170,6 +178,23 @@ class App extends React.Component {
     } return trunfoFiltrado === true
       ? this.cards(cardFilterTrunfo) : this.cards(cardFilterType);
     // return this.cards(cardFilterType);
+  };
+
+  componentDidMount() {
+    this.test();
+  }
+
+  test = () => {
+    if (localStorage.getItem('saved')) {
+      this.setState({ saved: JSON.parse(localStorage.getItem('saved')) }, () => {
+        const { saved } = this.state;
+        const temUmSuper = saved.some((element) => element.SuperTrunfo === true);
+        temUmSuper ? this.setState({ hasTrunfo: true })
+          : this.setState({ hasTrunfo: false });
+      });
+
+      console.log(localStorage.getItem('saved'));
+    }
   };
 
   render() {
@@ -186,9 +211,10 @@ class App extends React.Component {
       pesquisa,
       filtroName,
       filtroPorTipo,
-      trunfoFiltrado } = this.state;
+      trunfoFiltrado,
+      classe } = this.state;
     return (
-      <>
+      <div className="corpo">
         <Header
           cardName={ filtroName }
           onInputChange={ this.onInputChange }
@@ -197,7 +223,7 @@ class App extends React.Component {
         />
         <div>
           {!pesquisa && (
-            <>
+            <div className="addCard">
               <Form
                 cardName={ nome }
                 cardDescription={ descricao }
@@ -212,21 +238,32 @@ class App extends React.Component {
                 onInputChange={ this.onInputChange }
                 onSaveButtonClick={ this.onSaveButtonClick }
               />
-              <Card
-                cardName={ nome }
-                cardDescription={ descricao }
-                cardAttr1={ primeiroAtributo }
-                cardAttr2={ segundoAtributo }
-                cardAttr3={ terceiroAtributo }
-                cardImage={ imagem }
-                cardRare={ tipo }
-                cardTrunfo={ SuperTrunfo }
-              />
-            </>)}
+              <div>
+                <h2 className="H2" id="preCard">PRÉ-VISUALIZAÇÃO</h2>
+                <Card
+                  cardName={ nome }
+                  cardDescription={ descricao }
+                  cardAttr1={ primeiroAtributo }
+                  cardAttr2={ segundoAtributo }
+                  cardAttr3={ terceiroAtributo }
+                  cardImage={ imagem }
+                  cardRare={ tipo }
+                  cardTrunfo={ SuperTrunfo }
+                  onClick={ this.giraCard }
+                  classe={ classe }
+                />
+              </div>
+            </div>)}
         </div>
-        {!pesquisa && <div>{this.cards(saved)}</div>}
-        {pesquisa && <div>{this.mostraCards()}</div>}
-      </>
+        {!pesquisa && (
+          <div>
+            <h2 className="todosOsCardsTitulo">Cards</h2>
+            <div className="todosOsCards">
+              {this.cards(saved)}
+            </div>
+          </div>)}
+        {pesquisa && <div className="cardCollectionPai">{this.mostraCards()}</div>}
+      </div>
     );
   }
 }

@@ -6,7 +6,7 @@ class Form extends React.Component {
     const { cardTrunfo, onInputChange } = this.props;
     if (Trunfo) return <p>Você já tem um Super Trunfo em seu baralho</p>;
     return (
-      <label htmlFor="SuperTrunfo">
+      <label htmlFor="SuperTrunfo" className="trunfo">
         Super Trunfo
         <input
           type="checkbox"
@@ -33,34 +33,37 @@ class Form extends React.Component {
       onSaveButtonClick } = this.props;
 
     return (
-      <>
+      <div className="forms">
+        <h2 className="H2">ADICIONE UMA NOVA CARTA</h2>
         <label htmlFor="nome">
-          Nome
+          <h3>Nome</h3>
           <input
             id="nome"
             name="nome"
             type="text"
-            placeholder="Coloque o nome"
             value={ cardName }
             onChange={ onInputChange }
+            maxLength="20"
             data-testid="name-input"
           />
         </label>
         <label htmlFor="descricao">
-          Descrição da carta
+          <h3>Descrição</h3>
           <textarea
             id="descricao"
             name="descricao"
             placeholder="coloque a descrição aqui"
             value={ cardDescription }
             onChange={ onInputChange }
+            maxLength="134"
             data-testid="description-input"
           />
         </label>
-        <label htmlFor="primeiro-atributo">
-          primeiro-atributo
+        <label htmlFor="primeiro-atributo" className="attr-label">
+          <h3>Força</h3>
           <input
             id="primeiro-atributo"
+            className="attr-input"
             name="primeiroAtributo"
             type="number"
             value={ cardAttr1 }
@@ -68,10 +71,11 @@ class Form extends React.Component {
             data-testid="attr1-input"
           />
         </label>
-        <label htmlFor="segundoAtributo">
-          segundo-atributo
+        <label htmlFor="segundoAtributo" className="attr-label">
+          <h3>Defesa</h3>
           <input
             id="segundoAtributo"
+            className="attr-input"
             name="segundoAtributo"
             type="number"
             value={ cardAttr2 }
@@ -79,10 +83,11 @@ class Form extends React.Component {
             data-testid="attr2-input"
           />
         </label>
-        <label htmlFor="terceiroAtributo">
-          terceiro-atributo
+        <label htmlFor="terceiroAtributo" className="attr-label">
+          <h3>Magia</h3>
           <input
             id="terceiroAtributo"
+            className="attr-input"
             name="terceiroAtributo"
             type="number"
             value={ cardAttr3 }
@@ -90,10 +95,11 @@ class Form extends React.Component {
             data-testid="attr3-input"
           />
         </label>
-        <label htmlFor="caminho-para-a-imagem">
-          caminho para a imagem
+        <label htmlFor="caminhoImagem" className="attr-label">
+          <h3>Imagem</h3>
           <input
-            id="caminho-para-a-imagem"
+            id="caminhoImagem"
+            className="attr-input"
             name="imagem"
             type="text"
             value={ cardImage }
@@ -101,28 +107,33 @@ class Form extends React.Component {
             data-testid="image-input"
           />
         </label>
-        <select
-          id="tipo"
-          name="tipo"
-          data-testid="rare-input"
-          onChange={ onInputChange }
-          value={ cardRare }
-        >
-          <option value="normal">normal</option>
-          <option value="raro">raro</option>
-          <option value="muito raro">muito raro</option>
-        </select>
-        {this.resolveOlint(hasTrunfo) }
-        <button
-          type="button"
-          name="button"
-          disabled={ isSaveButtonDisabled }
-          onClick={ onSaveButtonClick }
-          data-testid="save-button"
-        >
-          Salvar
-        </button>
-      </>
+        <label htmlFor="tipo">
+          <h3>Raridade</h3>
+          <select
+            id="tipo"
+            name="tipo"
+            data-testid="rare-input"
+            onChange={ onInputChange }
+            value={ cardRare }
+          >
+            <option value="normal">normal</option>
+            <option value="raro">raro</option>
+            <option value="muito raro">muito raro</option>
+          </select>
+        </label>
+        <div className="submit">
+          {this.resolveOlint(hasTrunfo) }
+          <button
+            type="button"
+            name="button"
+            disabled={ isSaveButtonDisabled }
+            onClick={ onSaveButtonClick }
+            data-testid="save-button"
+          >
+            Salvar
+          </button>
+        </div>
+      </div>
     );
   }
 }

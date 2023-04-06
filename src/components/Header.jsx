@@ -6,12 +6,15 @@ class Header extends React.Component {
     const { cardName, onInputChange, cardRare, cardTrunfo } = this.props;
     return (
       <header>
+        <h3>Campo de Busca</h3>
         <input
           type="text"
           name="filtroName"
+          className="filtroName"
           value={ cardName }
           onChange={ onInputChange }
           disabled={ cardTrunfo }
+          placeholder="Buscar..."
           data-testid="name-filter"
         />
         <select
@@ -20,15 +23,16 @@ class Header extends React.Component {
           onChange={ onInputChange }
           disabled={ cardTrunfo }
           value={ cardRare }
+          className="filtroName"
           data-testid="rare-filter"
         >
-          <option value="todas">todas</option>
+          <option value="todos">todas</option>
           <option value="normal">normal</option>
           <option value="raro">raro</option>
           <option value="muito raro">muito raro</option>
         </select>
-        <label htmlFor="Super">
-          Super Trunfo
+        <label htmlFor="Super" className="trunfoFiltrado">
+          <h3>Super Trunfo</h3>
           <input
             type="checkbox"
             id="Super"

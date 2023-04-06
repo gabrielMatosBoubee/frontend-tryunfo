@@ -1,4 +1,10 @@
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 body {
+  background-color: #04151F;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -11,3 +17,316 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+header { 
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #072536;
+  height: 50px;
+  color: #F0F2F5;
+}
+
+.filtroName {
+  height: 25px;
+  width: 300px;
+}
+
+.trunfoFiltrado {
+  display: flex;
+}
+
+.trunfoFiltrado h3 {
+  padding: 10px;
+}
+
+.forms {
+  display: flex;
+  /* justify-content: flex; */
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-style: normal;
+  color: #020C12;
+  font-style: normal;
+  flex-direction: column;
+  padding: 10px;
+  width: 404px;
+  height: 596px;
+  /* background-color: brown; */
+}
+
+.forms label {
+  display: flex;
+  gap: 5px;
+  padding: 10px;
+  flex-direction: column ;
+}
+
+.forms .trunfo {
+  display: flex;
+  padding: 10px;
+  flex-direction: row ;
+}
+
+.forms .attr-label {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  flex-direction: row ;
+  width: 100%;
+}
+
+.forms .attr-input {
+  background-color: #A3D6F5;
+  width: 275px; 
+  height: 37px;
+  border: 1px solid black;
+}
+
+.forms #nome {
+  background-color: #7EC5F1;
+  border: 0px;
+  border-bottom: 1px solid #020C12;
+  outline: 0;
+  height: 37px;
+  /* box-shadow: 0 0 0; */
+  /* padding-inline: 100px ; */
+}
+.forms #descricao {
+  background-color: #7EC5F1;
+  border: 0px;
+  border-bottom: 1px solid #3D495C;
+  outline: 0;
+  resize: none;
+  height: 80px;
+  /* box-shadow: 0 0 0; */
+  /* padding-inline: 100px ; */
+}
+#caminhoImagem {
+  background-color: #A3D6F5;
+  border: 1px solid black;
+}
+.forms #tipo {
+  background-color: #7EC5F1;
+  border: 0px;
+  border-bottom: 1px solid #3D495C;
+  outline: 0;
+  font-size: medium;
+  height: 30px;
+}
+
+.addCard {
+  display: flex;
+  position: relative;
+  top: 30px;
+  /* height: 100; */
+  width: 85%;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0px 4px 19px rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  background-color: #7EC5F1;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.CardBorder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 328px;
+  height: 534px;
+  border-radius: 9.73px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0px 3.89311px 18.4923px rgba(0, 0, 0, 0.25);
+  /* background-image: url(); */
+}
+
+.Card img {
+  margin: auto;
+  width: 300px;
+  height: 270px;
+  border-radius: 0px 0px 9.73px 9.73px ;
+}
+
+.Card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: auto;
+  justify-content: space-around;
+  width: 95%;
+  height: 98%;
+  background: #0C496E;
+  border-radius: 9.73277px;
+}
+
+.cardAttr {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: auto;
+  width: 276.41px;
+  background: #F0F2F5;
+  border-radius: 9.73277px;
+}
+
+.cardAttrValue {
+  background-color: #083049;
+  border-radius: 0px 9.73277px 9.73277px 0px;
+  color: white;
+}
+
+.atributos {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: white;
+  margin: auto;
+  width: 290px;
+  height: 120px;
+  border-radius: 8px;
+}
+
+.items {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: auto;
+}
+
+.items #nomeCard {
+  display: flex;
+  justify-content: center;
+  padding: 3px;
+  margin: auto;
+  width: 300px;
+  border-radius: 9.73277px 9.73277px 0px 0px;
+  background-color: #083049;
+  color: white;
+  font-family: Epilogue;
+  font-size: 27.2518px;
+  font-style: normal;
+}
+
+.items #descricao {
+ box-sizing: border-box;
+ width: 308px;
+ height: 80px;
+ padding: 5px;
+ color: white;
+ word-wrap: break-word
+}
+
+#raridade {
+  text-align: center;
+}
+
+#seloTrunfo {
+  position: absolute;
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  width: 185.81px;
+  height: 33.65px;
+  left:190px;
+  top: 15.35px;
+  color: white;
+  background: linear-gradient(173.85deg, #126DA5 7.21%, #106193 46.75%);
+  transform: rotate(35deg)
+}
+
+.todosOsCards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  position: relative;
+  top: 110px
+}
+
+.todosOsCardsTitulo{
+  display: flex;
+  justify-content: space-around;
+  color: #F0F2F5;
+  position: relative;
+  top: 100px;
+  margin: auto;
+}
+
+.H2 {
+  color: #020C12;
+  margin: auto;
+}
+
+.submit {
+  display: flex;
+}
+
+.submit button {
+  width: 100%;
+}
+
+#preCard {
+  position: relative;
+  left: 40px;
+}
+
+.delete {
+  background-color: #04151F;
+  width: 25px;
+  border: none;
+  /* border-radius: 100%; */
+  font-size: 20px;
+  color: white;
+}
+
+.cardCollectionPai {
+  display: flex;
+  position: relative;
+  top: 15px;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.cardCollection {
+  display: flex;
+  padding: 10px;
+  /* align-items: center; */
+  /* align-content: space-around; */
+  flex-direction: column-reverse;
+}
+
+@keyframes carta {
+  /* x */
+  25% {
+    position: absolute;
+    width: 100px;
+    background-color: #020C12;
+  }
+  50% {
+    position: absolute;
+    width: 250px;
+    background-color: #020C12;
+  }
+
+  75% {
+    position: relative;
+    width: 400px;
+    background-color: #020C12;
+  }
+
+  100% {
+    position: relative;
+    width: 500px;
+    background-color: #020C12;
+  }
+}
+
+/* .CardBorder:hover {
+  /* width: 0px; */
+  /* background-color: white; */
+  /* animation-name: carta;
+  animation-duration: 5s;
+} */
+
